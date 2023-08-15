@@ -7,95 +7,90 @@
 
 import UIKit
 
+struct MenuSceneModel {
+    let labelText: String
+    let imageScene: UIImage
+}
+
 class MenuSceneVC: UIViewController {
+    
     
     let iPhoneButton = FTButton(color: .systemBlue, title: "iPhone")
     let iPadButton = FTButton(color: .systemMint, title: "iPad")
     let macButton = FTButton(color: .systemIndigo, title: "Mac")
+    let stackView = UIStackView()
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        configureUI()
+        ButtonsAction()
+        configureStackView()
+    }
 
+    
+    func configureStackView() {
+        view.addSubview(stackView)
         
+        stackView.addArrangedSubview(iPhoneButton)
+        stackView.addArrangedSubview(iPadButton)
+        stackView.addArrangedSubview(macButton)
+        
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 20
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Adjust the width of the buttons
+        iPhoneButton.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        iPadButton.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        macButton.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        
+        iPhoneButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        iPadButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        macButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 50),
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 250),
+            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50)
+        ])
     }
-    
-    func configureUI(){
-        iPhoneButtonFunction()
-        iPadButtonFunction()
-        macButtonFunction()
-    }
-    
-    func iPhoneButtonFunction(){
+
+    func ButtonsAction(){
         view.addSubview(iPhoneButton)
-        iPhoneButton.addTarget(self, action: #selector(presentiPhoneSceneVC), for: .touchUpInside)
-        
-        NSLayoutConstraint.activate([
-            iPhoneButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 70),
-            iPhoneButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200),
-            iPhoneButton.heightAnchor.constraint(equalToConstant: 50),
-            iPhoneButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50)
-        
-        ])
-        
-        
-    }
-    
-    func iPadButtonFunction(){
         view.addSubview(iPadButton)
-        iPadButton.addTarget(self, action: #selector(presentiPadSceneVC), for: .touchUpInside)
-        
-        NSLayoutConstraint.activate([
-            iPadButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 70),
-            iPadButton.topAnchor.constraint(equalTo: iPhoneButton.bottomAnchor, constant: 50),
-            iPadButton.heightAnchor.constraint(equalToConstant: 50),
-            iPadButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50)
-        
-        ])
-        
-        
-    }
-    
-    func macButtonFunction(){
         view.addSubview(macButton)
+        
+        iPhoneButton.addTarget(self, action: #selector(presentiPhoneSceneVC), for: .touchUpInside)
+        iPadButton.addTarget(self, action: #selector(presentiPadSceneVC), for: .touchUpInside)
         macButton.addTarget(self, action: #selector(presentMacSceneVC), for: .touchUpInside)
-          
-        
-        NSLayoutConstraint.activate([
-            macButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 70),
-            macButton.topAnchor.constraint(equalTo: iPadButton.bottomAnchor, constant: 50),
-            macButton.heightAnchor.constraint(equalToConstant: 50),
-            macButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50)
-        
-        ])
-        
-        
+       
     }
     
     @objc func presentiPhoneSceneVC() {
-        let scenesVC = iPhoneScene()
+        let scenesVC = ProductsSceneVC()
+        let sceneModel = MenuSceneModel(labelText: "iPhone", imageScene: UIImage(named: "2S1T")!)
+        scenesVC.sceneModel = sceneModel
         scenesVC.modalPresentationStyle = .fullScreen
         present(scenesVC, animated: true)
     }
     
     @objc func presentiPadSceneVC() {
-        let scenesVC = iPadScene()
+        let scenesVC = ProductsSceneVC()
+        let sceneModel = MenuSceneModel(labelText: "iPad", imageScene: UIImage(named: "4S1T")!)
+        scenesVC.sceneModel = sceneModel
         scenesVC.modalPresentationStyle = .fullScreen
         present(scenesVC, animated: true)
     }
     
     @objc func presentMacSceneVC() {
-        let scenesVC = MacScene()
+        let scenesVC = ProductsSceneVC()
+        let sceneModel = MenuSceneModel(labelText: "iPhone", imageScene: UIImage(named: "3S1T")!)
+        scenesVC.sceneModel = sceneModel
         scenesVC.modalPresentationStyle = .fullScreen
         present(scenesVC, animated: true)
     }
-
-
-
-    
-    
-
     
 
 }
