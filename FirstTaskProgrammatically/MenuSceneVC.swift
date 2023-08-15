@@ -24,7 +24,7 @@ class MenuSceneVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        ButtonsAction()
+        buttonsAction()
         configureStackView()
     }
 
@@ -58,7 +58,7 @@ class MenuSceneVC: UIViewController {
     }
 
 
-    func ButtonsAction(){
+    func buttonsAction(){
         iPhoneButton.addTarget(self, action: #selector(presentiPhoneSceneVC), for: .touchUpInside)
         iPadButton.addTarget(self, action: #selector(presentiPadSceneVC), for: .touchUpInside)
         macButton.addTarget(self, action: #selector(presentMacSceneVC), for: .touchUpInside)
