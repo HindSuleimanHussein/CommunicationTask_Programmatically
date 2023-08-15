@@ -41,7 +41,6 @@ class MenuSceneVC: UIViewController {
         stackView.spacing = 20
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        // Adjust the width of the buttons
         iPhoneButton.widthAnchor.constraint(equalToConstant: 250).isActive = true
         iPadButton.widthAnchor.constraint(equalToConstant: 250).isActive = true
         macButton.widthAnchor.constraint(equalToConstant: 250).isActive = true
@@ -53,43 +52,37 @@ class MenuSceneVC: UIViewController {
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 50),
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 250),
-            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50)
+            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50),
+            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
         ])
     }
 
+
     func ButtonsAction(){
-        view.addSubview(iPhoneButton)
-        view.addSubview(iPadButton)
-        view.addSubview(macButton)
-        
         iPhoneButton.addTarget(self, action: #selector(presentiPhoneSceneVC), for: .touchUpInside)
         iPadButton.addTarget(self, action: #selector(presentiPadSceneVC), for: .touchUpInside)
         macButton.addTarget(self, action: #selector(presentMacSceneVC), for: .touchUpInside)
        
     }
     
+    func presentProductsScene(with labelText: String, imageName: String) {
+        let scenesVC = ProductsSceneVC()
+        let sceneModel = MenuSceneModel(labelText: labelText, imageScene: UIImage(named: imageName)!)
+        scenesVC.sceneModel = sceneModel
+        scenesVC.modalPresentationStyle = .fullScreen
+        present(scenesVC, animated: true)
+    }
+
     @objc func presentiPhoneSceneVC() {
-        let scenesVC = ProductsSceneVC()
-        let sceneModel = MenuSceneModel(labelText: "iPhone", imageScene: UIImage(named: "2S1T")!)
-        scenesVC.sceneModel = sceneModel
-        scenesVC.modalPresentationStyle = .fullScreen
-        present(scenesVC, animated: true)
+        presentProductsScene(with: "iPhone", imageName: "2S1T")
     }
-    
+
     @objc func presentiPadSceneVC() {
-        let scenesVC = ProductsSceneVC()
-        let sceneModel = MenuSceneModel(labelText: "iPad", imageScene: UIImage(named: "4S1T")!)
-        scenesVC.sceneModel = sceneModel
-        scenesVC.modalPresentationStyle = .fullScreen
-        present(scenesVC, animated: true)
+        presentProductsScene(with: "iPad", imageName: "4S1T")
     }
-    
+
     @objc func presentMacSceneVC() {
-        let scenesVC = ProductsSceneVC()
-        let sceneModel = MenuSceneModel(labelText: "iPhone", imageScene: UIImage(named: "3S1T")!)
-        scenesVC.sceneModel = sceneModel
-        scenesVC.modalPresentationStyle = .fullScreen
-        present(scenesVC, animated: true)
+        presentProductsScene(with: "Mac", imageName: "3S1T")
     }
     
 
